@@ -15,13 +15,15 @@ function Home() {
     const [task, setTask] = useState([]);
     const [newTask, setNewTask] = useState( { title: '', description: '', userId: userId})
 
+    const apiURL = import.meta.env.VITE_API_URL;
+
     const headers = {
         Authorization: `Bearer ${token}`,
     };
 
     const fetchTasks = async () => {
         try {
-            const res = await axios.get(`${process.env.API_URL}/${userId}`, {headers})
+            const res = await axios.get(`${apiURL}/tasks/${userId}`, {headers})
             setTask(res.data || []);
             console.log(res.data)
         } catch(err){
@@ -32,7 +34,7 @@ function Home() {
 
     const handleAddTask= async () => {
         try {
-            const res = await axios.post(`${process.env.API_URL}`, newTask, {headers})
+            const res = await axios.post(`${apiURL}/tasks`, newTask, {headers})
             setTask(prev => [...prev, res.data])
             setNewTask({ title: '', description: '', userId: userId});
             alert('task added successfully');
@@ -43,7 +45,7 @@ function Home() {
 
     const handleDeleteTask = async (id) => {
         try {
-            await axios.delete(`${process.env.API_URL}/${id}`, {headers})
+            await axios.delete(`${apiURL}/tasks/${id}`, {headers})
             alert('task deleted');
             fetchTasks();
         } catch(err){

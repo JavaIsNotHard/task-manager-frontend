@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from './slice';
-import { redirect, useNavigate } from 'react-router';
+import { redirect, useNavigate, Link } from 'react-router';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -10,9 +10,13 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const apiURL = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e) => {
+    console.log(`response from the server `);
     try {
-        const res = await axios.post(process.env.API_URL, { username, password});
+        console.log(`response from the server ${res}`);
+        const res = await axios.post(`${apiURL}/login`, { username, password});
         dispatch(loginSuccess(res.data));
         navigate('/');
     } catch (err) {
@@ -26,6 +30,7 @@ function Login() {
         <input value={username} onChange={e => setUsername(e.target.value)} placeholder='Username'/>
         <input type="password"  value={password} onChange={e => setPassword(e.target.value)} placeholder='Password'/>
         <button onClick={handleSubmit}>Login</button>
+        <p>Don't have an account? <Link to="/register">Register here</Link></p> {/* Add register link */}
     </div>
   );
 }
