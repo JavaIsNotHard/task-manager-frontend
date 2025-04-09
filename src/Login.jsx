@@ -15,12 +15,12 @@ function Login() {
   const handleSubmit = async (e) => {
     console.log(`response from the server `);
     try {
-        console.log(`response from the server ${res}`);
         const res = await axios.post(`${apiURL}/login`, { username, password});
         dispatch(loginSuccess(res.data));
         navigate('/');
     } catch (err) {
         alert('Login Failed');
+        console.log(err);
     }
   };
 
