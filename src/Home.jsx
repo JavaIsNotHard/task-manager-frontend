@@ -21,7 +21,7 @@ function Home() {
 
     const fetchTasks = async () => {
         try {
-            const res = await axios.get(`http://localhost:8000/tasks/${userId}`, {headers})
+            const res = await axios.get(`${process.env.API_URL}/${userId}`, {headers})
             setTask(res.data || []);
             console.log(res.data)
         } catch(err){
@@ -32,7 +32,7 @@ function Home() {
 
     const handleAddTask= async () => {
         try {
-            const res = await axios.post('http://localhost:8000/tasks', newTask, {headers})
+            const res = await axios.post(`${process.env.API_URL}`, newTask, {headers})
             setTask(prev => [...prev, res.data])
             setNewTask({ title: '', description: '', userId: userId});
             alert('task added successfully');
@@ -43,7 +43,7 @@ function Home() {
 
     const handleDeleteTask = async (id) => {
         try {
-            await axios.delete(`http://localhost:8000/tasks/${id}`, {headers})
+            await axios.delete(`${process.env.API_URL}/${id}`, {headers})
             alert('task deleted');
             fetchTasks();
         } catch(err){

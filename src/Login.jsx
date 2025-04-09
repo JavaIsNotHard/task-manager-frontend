@@ -12,7 +12,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     try {
-        const res = await axios.post('http://localhost:8000/login', { username, password});
+        const res = await axios.post(process.env.API_URL, { username, password});
         dispatch(loginSuccess(res.data));
         navigate('/');
     } catch (err) {
