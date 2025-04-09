@@ -1,19 +1,18 @@
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router'
 import Login from './Login.jsx';
+import Home from './Home.jsx';
+import { useState } from 'react';
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('token'));
-
-  const handleLogin = (newToken) => {
-    setToken(newToken);
-    localStorage.setItem('token', newToken);
-  }
-
   return (
     <Router>
+      <nav>
+        <Link to="/login">Login</Link> | <Link to="/">Home</Link>
+      </nav>
       <Routes>
-        <Route path='/login' element={<Login onLogin={handleLogin} />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<Home />} />
       </Routes>
     </Router>
   )
